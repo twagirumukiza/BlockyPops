@@ -547,6 +547,9 @@
     .sh-box h3{font-family:'Press Start 2P',cursive;font-size:.75rem;line-height:1.5;margin-bottom:.3rem}
     .sh-box a{text-decoration:none}
 
+    .media-grid video{width:100%;aspect-ratio:1;object-fit:cover;background:#000;display:block;cursor:auto}
+    .media-title{font-family:'Press Start 2P',cursive;font-size:.7rem;margin:1.6rem 0 .8rem;color:var(--accent)}
+
     /* Responsive */
     @media (max-width: 600px) {
       .logo-text { font-size: 0.7rem; }
@@ -580,7 +583,7 @@
     <div id="view-shop">
     <section class="hero">
       <h1 data-i18n="hero-title">Dig into the cutest<br>Minecraft minis!</h1>
-      <p data-i18n="hero-sub">10 unique hand-picked BlockyPops — shown from every angle. Perfect for collectors, desks, pencil cases, pencils, pens and backpacks. Limited stock, pure pixel fun!</p>
+      <p data-i18n="hero-sub">Unique hand-picked BlockyPops — shown from every angle. Perfect for collectors, desks, pencil cases, pencils, pens and backpacks. Limited stock, pure pixel fun!</p>
       <div class="price-badge" data-i18n="price-all">Fun pop piece</div>
     </section>
 
@@ -617,23 +620,15 @@
   <script>
     const products = [
   {
-    id: 2,
-    slug: "alex-mineur-soleil",
-    cond: "new",
-    en: { name: "Alex_Sunny Miner VC317", desc: "A little piece of Minecraft to collect! Find Alex in her stunning golden outfit, available in a mini, ultra-pixelated version.\nFeaturing a bright yellow look, a small sword, and a handy black attachment clip, this figurine easily hooks onto a bag, a pencil case, or a key ring.\nIdeal for: Fans of the Minecraft universe, gaming merch collectors, or to add an original, geeky touch to everyday life!", tag: "Clip-on" },
-    fr: { name: "Alex_Mineur Soleil VC317", desc: " petit morceau de Minecraft à collectionner ! Retrouvez Alex dans sa superbe tenue dorée, proposée dans une version mini et ultra pixelisée.   Dotée d'un look jaune éclatant, d'une petite épée et d'un clip d'accroche noir pratique, cette figurine s'accroche facilement à un sac, une trousse ou un trousseau de clés.   Idéal pour : Les fans de l'univers Minecraft, les collectionneurs de goodies gaming ou pour offrir une touche geek et originale au quotidien !   ", tag: "Avec clip" }
-  },
-  {
-    id: 11,
-    slug: "creeper-vc309a",
-    cond: "new",
-    en: { name: "Turquoise Creeper VC309A", desc: "Light blue / turquoise Creeper VC309A from the Kinder Joy Minecraft collection. One of the most famous and iconic creatures in the video game.", tag: "" },
-    fr: { name: "Creeper  turquoise VC309A", desc: "Creeper bleu clair / turquoise VC309A issu de la collection Kinder Joy Minecraft.l'une des créatures les plus célèbres et emblématiques du jeu vidéo.", tag: "" }
-  },
-  {
     id: 1,
     en: { name: "Golden Pixel Chest", desc: "A shiny golden cube straight from a loot room! Pixel-perfect face and metallic shine. Perfect desk guardian or lucky charm.", tag: "Rare shine" },
     fr: { name: "Coffre Pixel Doré", desc: "Un cube doré tout droit sorti d'une salle de butin ! Visage pixel parfait et éclat métallique. Garde de bureau ou porte-bonheur idéal.", tag: "Éclat rare" }
+  },
+  {
+    id: 2,
+    slug: "alex-mineur-soleil",
+    en: { name: "Alex_Sunny Miner VC317", desc: "A little piece of Minecraft to collect! Find Alex in her stunning golden outfit, available in a mini, ultra-pixelated version.\nFeaturing a bright yellow look, a small sword, and a handy black attachment clip, this figurine easily hooks onto a bag, a pencil case, or a key ring.\nIdeal for: Fans of the Minecraft universe, gaming merch collectors, or to add an original, geeky touch to everyday life!", tag: "Clip-on" },
+    fr: { name: "Alex_Mineur Soleil VC317", desc: " petit morceau de Minecraft à collectionner ! Retrouvez Alex dans sa superbe tenue dorée, proposée dans une version mini et ultra pixelisée.   Dotée d'un look jaune éclatant, d'une petite épée et d'un clip d'accroche noir pratique, cette figurine s'accroche facilement à un sac, une trousse ou un trousseau de clés.   Idéal pour : Les fans de l'univers Minecraft, les collectionneurs de goodies gaming ou pour offrir une touche geek et originale au quotidien !   ", tag: "Avec clip" }
   },
   {
     id: 3,
@@ -683,7 +678,7 @@
       en: {
         tagline: "Minecraft Mini Figures",
         "hero-title": "Dig into the cutest<br>Minecraft minis!",
-        "hero-sub": "10 unique hand-picked BlockyPops — shown from every angle. Perfect for collectors, desks, pencil cases, pencils, pens and backpacks. Limited stock, pure pixel fun!",
+        "hero-sub": "Unique hand-picked BlockyPops — shown from every angle. Perfect for collectors, desks, pencil cases, pencils, pens and backpacks. Limited stock, pure pixel fun!",
         "price-all": "Fun pop piece",
         "angles-badge": "4 ANGLES",
         "angles-title": "The full collection from every side",
@@ -706,6 +701,7 @@
         remove: "Remove",
         paid: "✅ Demo payment done — cart emptied!",
         items: "items",
+        "more-media": "More photos & videos",
         like: "Like", share: "Share", "share-title": "Share this item",
         "copy-link": "📋 Copy link (Instagram, TikTok…)",
         "link-copied": "🔗 Link copied — paste it in Instagram or TikTok!",
@@ -715,7 +711,7 @@
       fr: {
         tagline: "Mini Figurines Minecraft",
         "hero-title": "Creuse dans les minis<br>Minecraft les plus mignons !",
-        "hero-sub": "10 BlockyPops uniques soigneusement sélectionnés — présentés sous tous les angles. Parfaits pour les collectionneurs, bureaux, trousses, crayons, stylos et sacs à dos. Stock limité, pure fun pixel !",
+        "hero-sub": "BlockyPops uniques soigneusement sélectionnés — présentés sous tous les angles. Parfaits pour les collectionneurs, bureaux, trousses, crayons, stylos et sacs à dos. Stock limité, pure fun pixel !",
         "price-all": "Pièce fun pop",
         "angles-badge": "4 ANGLES",
         "angles-title": "La collection complète de tous les côtés",
@@ -738,6 +734,7 @@
         remove: "Retirer",
         paid: "✅ Paiement démo effectué — panier vidé !",
         items: "articles",
+        "more-media": "Plus de photos et vidéos",
         like: "J'aime", share: "Partager", "share-title": "Partager cet item",
         "copy-link": "📋 Copier le lien (Instagram, TikTok…)",
         "link-copied": "🔗 Lien copié — colle-le dans Instagram ou TikTok !",
@@ -918,6 +915,7 @@
             </div>`).join('')}
         </div>
         <p class="zoom-hint">${t9['zoom-hint']}</p>
+        ${mediaBlock(p)}
         <div class="detail-info">
           <div><span class="fun-tag">${t.tag}</span>${p.cond ? `<span class="cond-inline">${t9['cond-' + p.cond] || ''}</span>` : ''}</div>
           <p class="product-desc">${t.desc}</p>
@@ -1064,18 +1062,35 @@
     async function copyShare(id) { if (await copyText(shareUrl(id))) showToast(i18n[currentLang]['link-copied']); closeShare(); }
     function closeShare() { document.getElementById('sh').hidden = true; }
 
+    // ===== Photos / vidéos supplémentaires (champ media: [...] de l'item) =====
+    const isVideo = n => /\.(mp4|webm|mov|m4v|ogv)$/i.test(n);
+    const mediaUrl = n => "images/" + encodeURIComponent(n);
+    const lbItems = p => [
+      ...ANGLES.map(([k, l]) => ({ style: angleStyle(p, k), cap: i18n[currentLang][l], grp: !p.slug })),
+      ...(p.media || []).filter(n => !isVideo(n)).map((n, j) => ({ style: `background-image:url('${mediaUrl(n)}');background-size:cover;background-position:center`, cap: '#' + (j + 1), grp: false }))
+    ];
+    function mediaBlock(p) {
+      const list = p.media || [];
+      if (!list.length) return '';
+      let img = 0;
+      return `<h3 class="media-title">${i18n[currentLang]['more-media']} (${list.length})</h3>
+        <div class="angles-grid media-grid">${list.map(n => isVideo(n)
+          ? `<div class="angle-card"><video src="${mediaUrl(n)}" controls playsinline preload="metadata"></video></div>`
+          : `<div class="angle-card"><div class="angle-img" role="img" aria-label="${p[currentLang].name}" onclick="openLb(${p.id},${ANGLES.length + img++})" style="background-image:url('${mediaUrl(n)}');background-size:cover;background-position:center"></div></div>`).join('')}</div>`;
+    }
+
     // ===== Zoom (lightbox) =====
     let lb = { p: null, i: 0, zoom: false };
     function paintLb() {
-      const [k, l] = ANGLES[lb.i], st = document.getElementById('lbStage'), im = document.getElementById('lbImg');
-      st.classList.toggle('grp', !lb.p.slug); st.classList.remove('zoomed');
-      im.style.cssText = angleStyle(lb.p, k).replace('cover', 'contain');
-      document.getElementById('lbCap').textContent = lb.p[currentLang].name + ' – ' + i18n[currentLang][l];
+      const it = lbItems(lb.p)[lb.i], st = document.getElementById('lbStage'), im = document.getElementById('lbImg');
+      st.classList.toggle('grp', it.grp); st.classList.remove('zoomed');
+      im.style.cssText = it.style.replace('cover', 'contain');
+      document.getElementById('lbCap').textContent = lb.p[currentLang].name + ' – ' + it.cap;
       lb.zoom = false;
     }
     function openLb(id, i) { lb = { p: byId(id), i, zoom: false }; paintLb(); document.getElementById('lb').hidden = false; document.body.style.overflow = 'hidden'; }
     function closeLb() { document.getElementById('lb').hidden = true; document.body.style.overflow = ''; }
-    function lbStep(d) { lb.i = (lb.i + d + ANGLES.length) % ANGLES.length; paintLb(); }
+    function lbStep(d) { const n = lbItems(lb.p).length; lb.i = (lb.i + d + n) % n; paintLb(); }
     function lbMove(e) {
       const st = document.getElementById('lbStage'), r = st.getBoundingClientRect();
       document.getElementById('lbImg').style.transformOrigin = `${((e.clientX - r.left) / r.width) * 100}% ${((e.clientY - r.top) / r.height) * 100}%`;
