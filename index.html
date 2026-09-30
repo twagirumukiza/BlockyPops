@@ -776,7 +776,7 @@
     // Les 4 photos de groupe contiennent les 10 figurines dans une grille.
     // Ajuste cols/rows si la disposition de tes photos est différente (ex. {cols:10, rows:1}).
     const GRID = { cols: 5, rows: 2 };
-    // Si tu as des photos individuelles (images/item-01-front.jpg, ...), passe à true.
+    // Inutile si tes produits ont un champ slug (généré par l'outil photos). Ancien mode : images/item-01-front.jpg.
     const PER_ITEM_IMAGES = false;
     const ANGLES = [
       ['front', 'angle-front'],
@@ -904,6 +904,10 @@
 
     // ===== Product / angles view =====
     function angleStyle(p, key) {
+      if (p.slug) {
+        // Photos nommées d'après l'item : images/<slug>-front|right|left|back.jpg
+        return `background-image:url('images/${p.slug}-${key}.jpg');background-size:cover;background-position:center`;
+      }
       if (PER_ITEM_IMAGES) {
         return `background-image:url('images/item-${String(p.id).padStart(2,'0')}-${key}.jpg');background-size:cover;background-position:center`;
       }
@@ -1023,6 +1027,7 @@
     }
     // Adapt crop ratio to the group photo so single figurines are not distorted
     (function () {
+      if (products.some(p => p.slug)) return; // photos individuelles : pas de grille à mesurer
       const img = new Image();
       img.onload = () => {
         const ratio = (img.naturalWidth / GRID.cols) / (img.naturalHeight / GRID.rows);
