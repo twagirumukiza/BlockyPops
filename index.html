@@ -771,7 +771,8 @@
     };
 
     // ===== Config =====
-    const PRICE = 9.99;
+    const PRICE = 9.99; // prix par défaut ; un produit peut avoir son propre champ price
+    const priceOf = p => (p && p.price != null && p.price !== '' && !isNaN(p.price)) ? Number(p.price) : PRICE;
     const CART_KEY = 'blockypops-cart';
     // Les 4 photos de groupe contiennent les 10 figurines dans une grille.
     // Ajuste cols/rows si la disposition de tes photos est différente (ex. {cols:10, rows:1}).
@@ -801,7 +802,7 @@
       updateBadge();
     }
     function cartCount() { return cart.reduce((n, i) => n + i.qty, 0); }
-    function cartTotal() { return cart.reduce((n, i) => n + i.qty * PRICE, 0); }
+    function cartTotal() { return cart.reduce((n, i) => n + i.qty * priceOf(byId(i.id)), 0); }
     function updateBadge() {
       const b = document.getElementById('cartBadge');
       const n = cartCount();
@@ -887,7 +888,7 @@
               <div>
                 <span class="fun-tag">${t.tag}</span>
               </div>
-              <div class="product-price">${money(PRICE)}</div>
+              <div class="product-price">${money(priceOf(p))}</div>
               <div class="card-actions">
                 <button class="btn-angles" onclick="event.stopPropagation();openProduct(${p.id})">
                   👁️ <span>${t9['view-angles']}</span>
@@ -938,7 +939,7 @@
         <div class="detail-info">
           <div><span class="fun-tag">${t.tag}</span></div>
           <p class="product-desc">${t.desc}</p>
-          <div class="product-price">${money(PRICE)}</div>
+          <div class="product-price">${money(priceOf(p))}</div>
           <button class="btn-cart" onclick="addToCart(${p.id})">⛏️ <span>${t9.add}</span></button>
         </div>
       `;
@@ -991,14 +992,14 @@
                 <div class="product-num">${num(p.id)}</div>
                 <div>
                   <div class="cart-name">${t.name}</div>
-                  <div class="cart-unit">${money(PRICE)}</div>
+                  <div class="cart-unit">${money(priceOf(p))}</div>
                 </div>
                 <div class="qty">
                   <button onclick="changeQty(${p.id},-1)" aria-label="−">−</button>
                   <span>${i.qty}</span>
                   <button onclick="changeQty(${p.id},1)" aria-label="+">+</button>
                 </div>
-                <div class="cart-line">${money(i.qty * PRICE)}</div>
+                <div class="cart-line">${money(i.qty * priceOf(p))}</div>
                 <button class="btn-remove" onclick="removeFromCart(${p.id})">✕ ${t9.remove}</button>
               </div>`;
           }).join('')}
