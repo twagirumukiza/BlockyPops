@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="BlockyPops – Minecraft Mini Figures">
+  <meta property="og:description" content="Fun Minecraft mini figures – choisis tes favoris !">
+  <meta property="og:type" content="website">
   <title>BlockyPops – Fun Minecraft Mini Figures | 9.99€</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -519,6 +522,31 @@
       .cart-line { text-align: left; }
     }
 
+
+    /* ===== Photo de face, cœurs, partage, état ===== */
+    .card-photo{position:relative;width:100%;aspect-ratio:var(--cell,1);background-color:#ddd;background-repeat:no-repeat;border-bottom:3px solid var(--border)}
+    .fab{position:absolute;bottom:.6rem;background:rgba(10,21,10,.85);color:#fff;border:2px solid #000;border-radius:8px;padding:.3rem .6rem;font:inherit;font-weight:800;font-size:.85rem;cursor:pointer;display:flex;gap:.3rem;align-items:center;box-shadow:2px 2px 0 #000}
+    .fab:hover{background:var(--accent);color:#0a150a}
+    .fab-heart{left:.6rem}.fab-share{right:.6rem}
+    .cond-tag{position:absolute;top:.6rem;left:.6rem;background:var(--accent2);color:#1a1a1a;border:2px solid #000;border-radius:6px;font-size:.7rem;font-weight:800;padding:.15rem .5rem}
+    .cond-inline{display:inline-block;margin-left:.5rem;background:var(--accent2);color:#1a1a1a;border:2px solid #000;border-radius:6px;font-size:.75rem;font-weight:800;padding:.15rem .5rem}
+    .angle-img{cursor:zoom-in}
+    .zoom-hint{color:var(--text-muted);font-size:.85rem;margin-top:.6rem}
+    .actions-row{display:flex;gap:.6rem;flex-wrap:wrap}
+    .actions-row .btn-angles{padding:.5rem 1rem}
+    .lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;display:grid;place-items:center}
+    .lb[hidden]{display:none}
+    .lb-stage{width:min(92vw,80vh);aspect-ratio:1;overflow:hidden;border:3px solid #000;border-radius:8px;cursor:zoom-in;background:#222;touch-action:none}
+    .lb-stage.grp{aspect-ratio:var(--cell,1);width:min(92vw,calc(80vh*var(--cell,1)))}
+    .lb-stage.zoomed{cursor:zoom-out}
+    .lb-img{width:100%;height:100%;background-repeat:no-repeat;transition:transform .2s}
+    .lb-x,.lb-nav{position:absolute;background:rgba(255,255,255,.15);color:#fff;border:2px solid #000;border-radius:8px;font-size:1.2rem;padding:.5rem .8rem;cursor:pointer}
+    .lb-x{top:1rem;right:1rem}.lb-prev{left:1rem;top:50%}.lb-next{right:1rem;top:50%}
+    .lb-cap{position:absolute;bottom:1rem;left:0;right:0;text-align:center;color:#fff;font-weight:800}
+    .sh-box{background:var(--bg-card);color:var(--text);border:3px solid var(--border);border-radius:14px;padding:1.3rem;width:min(92vw,420px);display:grid;gap:.6rem}
+    .sh-box h3{font-family:'Press Start 2P',cursive;font-size:.75rem;line-height:1.5;margin-bottom:.3rem}
+    .sh-box a{text-decoration:none}
+
     /* Responsive */
     @media (max-width: 600px) {
       .logo-text { font-size: 0.7rem; }
@@ -575,27 +603,32 @@
     <p data-i18n="footer">Made with ❤️ + diamonds • Not affiliated with Mojang / Microsoft • Just pure fan fun</p>
   </footer>
 
+  <div class="lb" id="lb" hidden onclick="if(event.target===this)closeLb()">
+    <button class="lb-x" onclick="closeLb()" aria-label="Close">✕</button>
+    <button class="lb-nav lb-prev" onclick="lbStep(-1)" aria-label="Previous">◀</button>
+    <div class="lb-stage" id="lbStage"><div class="lb-img" id="lbImg"></div></div>
+    <button class="lb-nav lb-next" onclick="lbStep(1)" aria-label="Next">▶</button>
+    <div class="lb-cap" id="lbCap"></div>
+  </div>
+  <div class="lb" id="sh" hidden onclick="if(event.target===this)closeShare()"><div class="sh-box" id="shBox"></div></div>
+
   <div class="toast" id="toast">⛏️ Added to inventory!</div>
 
   <script>
     const products = [
   {
     id: 1,
-    slug: "creeper-vc309a",
-    
-    en: { name: "Light blue / turquoise Creeper VC309A", desc: "Light blue / turquoise Creeper VC309A from the Kinder Joy Minecraft collection. One of the most famous and iconic creatures in the video game.", tag: "Rare shine" },
-    fr: { name: "Creeper bleu clair / turquoise VC309A", desc: "Creeper bleu clair / turquoise VC309A issu de la collection Kinder Joy Minecraft.l'une des créatures les plus célèbres et emblématiques du jeu vidéo.", tag: "Éclat rare" }
+    en: { name: "Golden Pixel Chest", desc: "A shiny golden cube straight from a loot room! Pixel-perfect face and metallic shine. Perfect desk guardian or lucky charm.", tag: "Rare shine" },
+    fr: { name: "Coffre Pixel Doré", desc: "Un cube doré tout droit sorti d'une salle de butin ! Visage pixel parfait et éclat métallique. Garde de bureau ou porte-bonheur idéal.", tag: "Éclat rare" }
   },
   {
     id: 2,
     slug: "alex-mineur-soleil",
-    
     en: { name: "Alex_Sunny Miner VC317", desc: "A little piece of Minecraft to collect! Find Alex in her stunning golden outfit, available in a mini, ultra-pixelated version.\nFeaturing a bright yellow look, a small sword, and a handy black attachment clip, this figurine easily hooks onto a bag, a pencil case, or a key ring.\nIdeal for: Fans of the Minecraft universe, gaming merch collectors, or to add an original, geeky touch to everyday life!", tag: "Clip-on" },
     fr: { name: "Alex_Mineur Soleil VC317", desc: " petit morceau de Minecraft à collectionner ! Retrouvez Alex dans sa superbe tenue dorée, proposée dans une version mini et ultra pixelisée.   Dotée d'un look jaune éclatant, d'une petite épée et d'un clip d'accroche noir pratique, cette figurine s'accroche facilement à un sac, une trousse ou un trousseau de clés.   Idéal pour : Les fans de l'univers Minecraft, les collectionneurs de goodies gaming ou pour offrir une touche geek et originale au quotidien !   ", tag: "Avec clip" }
   },
   {
     id: 3,
-   
     en: { name: "Aqua Explorer", desc: "Translucent blue explorer with classic brown pants. Clip included — dive into ocean monuments in style!", tag: "Clip-on" },
     fr: { name: "Explorateur Aqua", desc: "Explorateur bleu translucide avec pantalon marron classique. Clip inclus — plonge dans les monuments océaniques avec style !", tag: "Avec clip" }
   },
@@ -664,7 +697,12 @@
         pay: "Pay (demo)",
         remove: "Remove",
         paid: "✅ Demo payment done — cart emptied!",
-        items: "items"
+        items: "items",
+        like: "Like", share: "Share", "share-title": "Share this item",
+        "copy-link": "📋 Copy link (Instagram, TikTok…)",
+        "link-copied": "🔗 Link copied — paste it in Instagram or TikTok!",
+        "zoom-hint": "🔍 Tap a photo to zoom", close: "Close",
+        "cond-new": "New", "cond-vgood": "Very good condition", "cond-good": "Good condition"
       },
       fr: {
         tagline: "Mini Figurines Minecraft",
@@ -691,7 +729,12 @@
         pay: "Payer (démo)",
         remove: "Retirer",
         paid: "✅ Paiement démo effectué — panier vidé !",
-        items: "articles"
+        items: "articles",
+        like: "J'aime", share: "Partager", "share-title": "Partager cet item",
+        "copy-link": "📋 Copier le lien (Instagram, TikTok…)",
+        "link-copied": "🔗 Lien copié — colle-le dans Instagram ou TikTok !",
+        "zoom-hint": "🔍 Clique sur une photo pour zoomer", close: "Fermer",
+        "cond-new": "Neuf", "cond-vgood": "Très bon état", "cond-good": "Bon état"
       }
     };
 
@@ -738,7 +781,7 @@
       const t = n.toFixed(2);
       return (currentLang === 'fr' ? t.replace('.', ',') : t) + ' €';
     }
-    const num = id => '#' + String(id).padStart(2, '0');
+    const num = id => '#' + String(products.findIndex(p => p.id === id) + 1).padStart(2, '0');
     const byId = id => products.find(p => p.id === id);
 
     // ===== Language / theme =====
@@ -808,6 +851,11 @@
               <div class="product-name">${t.name}</div>
               <div class="product-num">${num(p.id)}</div>
             </div>
+            <div class="card-photo" style="${angleStyle(p, 'front')}">
+              ${p.cond ? `<span class="cond-tag">${t9['cond-' + p.cond] || ''}</span>` : ''}
+              <button class="fab fab-heart" data-heart="${p.id}" aria-label="${t9.like}" onclick="event.stopPropagation();toggleLike(${p.id})">${heartInner(p.id)}</button>
+              <button class="fab fab-share" aria-label="${t9.share}" onclick="event.stopPropagation();shareItem(${p.id})">↗ ${t9.share}</button>
+            </div>
             <div class="product-body">
               <p class="product-desc">${t.desc}</p>
               <div>
@@ -855,17 +903,22 @@
           <div class="product-num">${num(p.id)}</div>
         </div>
         <div class="angles-grid">
-          ${ANGLES.map(([key, label]) => `
+          ${ANGLES.map(([key, label], i) => `
             <div class="angle-card">
-              <div class="angle-img" role="img" aria-label="${t.name} – ${t9[label]}" style="${angleStyle(p, key)}"></div>
+              <div class="angle-img" role="img" onclick="openLb(${p.id},${i})" aria-label="${t.name} – ${t9[label]}" style="${angleStyle(p, key)}"></div>
               <div class="angle-label">${t9[label]}</div>
             </div>`).join('')}
         </div>
+        <p class="zoom-hint">${t9['zoom-hint']}</p>
         <div class="detail-info">
-          <div><span class="fun-tag">${t.tag}</span></div>
+          <div><span class="fun-tag">${t.tag}</span>${p.cond ? `<span class="cond-inline">${t9['cond-' + p.cond] || ''}</span>` : ''}</div>
           <p class="product-desc">${t.desc}</p>
           <div class="product-price">${money(priceOf(p))}</div>
           <button class="btn-cart" onclick="addToCart(${p.id})">⛏️ <span>${t9.add}</span></button>
+          <div class="actions-row">
+            <button class="btn-angles" data-heart="${p.id}" onclick="toggleLike(${p.id})">${heartInner(p.id)}</button>
+            <button class="btn-angles" onclick="shareItem(${p.id})">↗ ${t9.share}</button>
+          </div>
         </div>
       `;
     }
@@ -945,6 +998,96 @@
       toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
     }
 
+    // ===== Cœurs (J'aime) =====
+    // Compteur partagé entre visiteurs : colle l'URL de ta base Firebase Realtime Database ci-dessous
+    // (ex. 'https://mon-projet-default-rtdb.europe-west1.firebasedatabase.app'). Vide = compteur local au navigateur.
+    const FIREBASE_URL = '';
+    const LIKES_KEY = 'blockypops-likes';
+    let myLikes = {};
+    try { myLikes = JSON.parse(localStorage.getItem(LIKES_KEY) || '{}') || {}; } catch (e) {}
+    let likeCounts = {};
+    const likeCount = id => FIREBASE_URL ? (likeCounts[id] || 0) : (myLikes[id] ? 1 : 0);
+    const heartInner = id => `${myLikes[id] ? '❤️' : '🤍'} <span>${likeCount(id)}</span>`;
+    function refreshLikes() {
+      document.querySelectorAll('[data-heart]').forEach(b => { b.innerHTML = heartInner(Number(b.dataset.heart)); });
+    }
+    async function loadLikes() {
+      if (!FIREBASE_URL) return;
+      try { likeCounts = (await (await fetch(FIREBASE_URL + '/likes.json')).json()) || {}; refreshLikes(); } catch (e) {}
+    }
+    function toggleLike(id) {
+      const on = !myLikes[id];
+      if (on) myLikes[id] = 1; else delete myLikes[id];
+      try { localStorage.setItem(LIKES_KEY, JSON.stringify(myLikes)); } catch (e) {}
+      if (FIREBASE_URL) {
+        likeCounts[id] = Math.max(0, (likeCounts[id] || 0) + (on ? 1 : -1));
+        fetch(`${FIREBASE_URL}/likes/${id}.json`, { method: 'PUT', body: JSON.stringify(likeCounts[id]) }).catch(() => {});
+      }
+      refreshLikes();
+    }
+
+    // ===== Partage =====
+    const shareUrl = id => location.href.split('#')[0] + '#/product/' + id;
+    async function copyText(t) {
+      try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(t); return true; } } catch (e) {}
+      const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select();
+      let ok = false; try { ok = document.execCommand('copy'); } catch (e) {} a.remove(); return ok;
+    }
+    async function shareItem(id) {
+      const p = byId(id), title = p[currentLang].name + ' – BlockyPops';
+      if (navigator.share) { try { await navigator.share({ title, text: title, url: shareUrl(id) }); } catch (e) {} return; }
+      openShare(id);
+    }
+    function openShare(id) {
+      const p = byId(id), t9 = i18n[currentLang], title = p[currentLang].name + ' – BlockyPops';
+      const u = encodeURIComponent(shareUrl(id)), tx = encodeURIComponent(title);
+      const media = p.slug ? encodeURIComponent(new URL(`images/${p.slug}-front.jpg`, location.href).href) : '';
+      const links = [
+        ['WhatsApp', `https://wa.me/?text=${tx}%20${u}`], ['Facebook', `https://www.facebook.com/sharer/sharer.php?u=${u}`],
+        ['X', `https://twitter.com/intent/tweet?text=${tx}&url=${u}`], ['Telegram', `https://t.me/share/url?url=${u}&text=${tx}`],
+        ...(media ? [['Pinterest', `https://pinterest.com/pin/create/button/?url=${u}&media=${media}&description=${tx}`]] : []),
+        ['Email', `mailto:?subject=${tx}&body=${u}`]];
+      document.getElementById('shBox').innerHTML = `<h3>${t9['share-title']}</h3>` +
+        links.map(([n, h]) => `<a class="btn-angles" href="${h}" target="_blank" rel="noopener">${n}</a>`).join('') +
+        `<button class="btn-angles" onclick="copyShare(${id})">${t9['copy-link']}</button>
+         <button class="btn-back" style="margin:0" onclick="closeShare()">${t9.close}</button>`;
+      document.getElementById('sh').hidden = false;
+    }
+    async function copyShare(id) { if (await copyText(shareUrl(id))) showToast(i18n[currentLang]['link-copied']); closeShare(); }
+    function closeShare() { document.getElementById('sh').hidden = true; }
+
+    // ===== Zoom (lightbox) =====
+    let lb = { p: null, i: 0, zoom: false };
+    function paintLb() {
+      const [k, l] = ANGLES[lb.i], st = document.getElementById('lbStage'), im = document.getElementById('lbImg');
+      st.classList.toggle('grp', !lb.p.slug); st.classList.remove('zoomed');
+      im.style.cssText = angleStyle(lb.p, k).replace('cover', 'contain');
+      document.getElementById('lbCap').textContent = lb.p[currentLang].name + ' – ' + i18n[currentLang][l];
+      lb.zoom = false;
+    }
+    function openLb(id, i) { lb = { p: byId(id), i, zoom: false }; paintLb(); document.getElementById('lb').hidden = false; document.body.style.overflow = 'hidden'; }
+    function closeLb() { document.getElementById('lb').hidden = true; document.body.style.overflow = ''; }
+    function lbStep(d) { lb.i = (lb.i + d + ANGLES.length) % ANGLES.length; paintLb(); }
+    function lbMove(e) {
+      const st = document.getElementById('lbStage'), r = st.getBoundingClientRect();
+      document.getElementById('lbImg').style.transformOrigin = `${((e.clientX - r.left) / r.width) * 100}% ${((e.clientY - r.top) / r.height) * 100}%`;
+    }
+    (function () {
+      const st = document.getElementById('lbStage'), im = document.getElementById('lbImg');
+      st.addEventListener('click', e => {
+        lb.zoom = !lb.zoom; lbMove(e); st.classList.toggle('zoomed', lb.zoom);
+        im.style.transform = lb.zoom ? 'scale(2.6)' : '';
+      });
+      st.addEventListener('mousemove', e => { if (lb.zoom) lbMove(e); });
+      st.addEventListener('touchmove', e => { if (lb.zoom) { lbMove(e.touches[0]); e.preventDefault(); } }, { passive: false });
+      document.addEventListener('keydown', e => {
+        if (!document.getElementById('lb').hidden) {
+          if (e.key === 'Escape') closeLb(); else if (e.key === 'ArrowLeft') lbStep(-1); else if (e.key === 'ArrowRight') lbStep(1);
+        }
+        if (e.key === 'Escape') closeShare();
+      });
+    })();
+
     // ===== Init =====
     const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     if (savedTheme === 'dark') {
@@ -953,7 +1096,7 @@
     }
     // Adapt crop ratio to the group photo so single figurines are not distorted
     (function () {
-      if (products.some(p => p.slug)) return; // photos individuelles : pas de grille à mesurer
+      if (products.every(p => p.slug)) return; // photos individuelles : pas de grille à mesurer
       const img = new Image();
       img.onload = () => {
         const ratio = (img.naturalWidth / GRID.cols) / (img.naturalHeight / GRID.rows);
@@ -967,6 +1110,7 @@
     try { initLang = localStorage.getItem('lang') === 'fr' ? 'fr' : 'en'; } catch (e) {}
     setLang(initLang);
     render(false);
+    loadLikes();
   </script>
 </body>
 </html>
