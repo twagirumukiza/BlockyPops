@@ -556,6 +556,17 @@
     .cond-tag,.fab{z-index:2}
     .product-card.sold .card-photo::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.4)}
 
+    .badges{position:absolute;top:.6rem;left:.6rem;z-index:2;display:flex;flex-direction:column;gap:.35rem;align-items:flex-start}
+    .badges .cond-tag{position:static}
+    .bd{border:2px solid #000;border-radius:6px;font-size:.72rem;font-weight:800;padding:.15rem .5rem;box-shadow:2px 2px 0 #000;background:#fff;color:#1a1a1a}
+    .bd.prem{background:linear-gradient(135deg,#ffe082,#ffb300);color:#3a2a00}
+    .bd.acc{background:#b3e5fc;color:#01344d}
+    .bd.art{background:#d1c4e9;color:#2a1650}
+    .card-photo{border-bottom:none}
+    .product-card .product-body{padding:.9rem 1rem 1rem}
+    .product-desc ul,.product-desc ol{margin:.4rem 0 .4rem 1.4rem}
+    .product-desc h3{font-size:1.05rem;margin:.6rem 0 .3rem}
+
     /* Responsive */
     @media (max-width: 600px) {
       .logo-text { font-size: 0.7rem; }
@@ -724,7 +735,7 @@
         remove: "Remove",
         paid: "✅ Demo payment done — cart emptied!",
         items: "items",
-        limited: "Limited stock", soldout: "Sold out", "soldout-toast": "😢 Sold out – not available",
+        premium: "⭐ Premium", accessory: "🔗 Accessory", articulated: "🦾 Articulated", limited: "Limited stock", soldout: "Sold out", "soldout-toast": "😢 Sold out – not available",
         "more-media": "More photos & videos",
         like: "Like", share: "Share", "share-title": "Share this item",
         "copy-link": "📋 Copy link (Instagram, TikTok…)",
@@ -758,7 +769,7 @@
         remove: "Retirer",
         paid: "✅ Paiement démo effectué — panier vidé !",
         items: "articles",
-        limited: "Stock limité", soldout: "Épuisé", "soldout-toast": "😢 Épuisé – indisponible",
+        premium: "⭐ Premium", accessory: "🔗 Accessoire", articulated: "🦾 Articulé", limited: "Stock limité", soldout: "Épuisé", "soldout-toast": "😢 Épuisé – indisponible",
         "more-media": "Plus de photos et vidéos",
         like: "J'aime", share: "Partager", "share-title": "Partager cet item",
         "copy-link": "📋 Copier le lien (Instagram, TikTok…)",
@@ -772,6 +783,27 @@
     const PRICE = 9.99; // prix par défaut ; un produit peut avoir son propre champ price
     const priceOf = p => (p && p.price != null && p.price !== '' && !isNaN(p.price)) ? Number(p.price) : PRICE;
     const CART_KEY = 'blockypops-cart';
+    const typeOf = p => p.type || (p.premium ? 'premium' : '');
+    function badgesHtml(p, t9) {
+      const ty = typeOf(p);
+      return (p.cond ? `<span class="bd cond-tag">${t9['cond-' + p.cond] || ''}</span>` : '') +
+        (ty === 'premium' ? `<span class="bd prem">${t9.premium}</span>` : ty === 'accessory' ? `<span class="bd acc">${t9.accessory}</span>` : '') +
+        (p.articulated ? `<span class="bd art">${t9.articulated}</span>` : '');
+    }
+    // Texte enrichi : HTML autorisé limité (gras, italique, listes…) ; les anciens textes bruts restent valides
+    function richDesc(h) {
+      h = String(h || '');
+      if (!/<(b|strong|i|em|u|ul|ol|li|br|p|div|h3)\b/i.test(h)) return h.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\n/g, '<br>');
+      const t = document.createElement('template'); t.innerHTML = h;
+      const ok = { B: 1, STRONG: 1, I: 1, EM: 1, U: 1, UL: 1, OL: 1, LI: 1, BR: 1, P: 1, H3: 1, DIV: 1 };
+      (function walk(n) {
+        [...n.childNodes].forEach(c => {
+          if (c.nodeType === 1) { walk(c); if (!ok[c.tagName]) c.replaceWith(...c.childNodes); else [...c.attributes].forEach(a => c.removeAttribute(a.name)); }
+          else if (c.nodeType !== 3) c.remove();
+        });
+      })(t.content);
+      return t.innerHTML;
+    }
     const limitedStock = p => !!p && p.stock === 'limited';
     const soldOut = p => !!p && (p.stock === false || p.stock === 0 || p.stock === 'false');
     function cartBtn(p, stop) {
@@ -885,22 +917,13 @@
                    aria-label="${t.name}"
                    onclick="openProduct(${p.id})"
                    onkeydown="if(event.key==='Enter'&&event.target===this)openProduct(${p.id})">
-            <div class="product-header">
-              <div class="product-name">${t.name}</div>
-              <div class="product-num">${num(p.id)}</div>
-            </div>
             <div class="card-photo" style="${angleStyle(p, 'front')}">
-              ${p.cond ? `<span class="cond-tag">${t9['cond-' + p.cond] || ''}</span>` : ''}
+              <div class="badges">${badgesHtml(p, t9)}</div>
               ${soldOut(p) ? `<span class="sold-tag">${t9.soldout}</span>` : limitedStock(p) ? `<span class="sold-tag low">${t9.limited}</span>` : ''}
               <button class="fab fab-heart" data-heart="${p.id}" aria-label="${t9.like}" onclick="event.stopPropagation();toggleLike(${p.id})">${heartInner(p.id)}</button>
               <button class="fab fab-share" aria-label="${t9.share}" onclick="event.stopPropagation();shareItem(${p.id})">↗ ${t9.share}</button>
             </div>
             <div class="product-body">
-              <p class="product-desc">${t.desc}</p>
-              <div>
-                <span class="fun-tag">${t.tag}</span>
-              </div>
-              <div class="product-price">${money(priceOf(p))}</div>
               <div class="card-actions">
                 <button class="btn-angles" onclick="event.stopPropagation();openProduct(${p.id})">
                   👁️ <span>${t9['view-angles']}</span>
@@ -949,8 +972,8 @@
         <p class="zoom-hint">${t9['zoom-hint']}</p>
         ${mediaBlock(p)}
         <div class="detail-info">
-          <div><span class="fun-tag">${t.tag}</span>${p.cond ? `<span class="cond-inline">${t9['cond-' + p.cond] || ''}</span>` : ''}${soldOut(p) ? `<span class="cond-inline" style="background:#c0392b;color:#fff">${t9.soldout}</span>` : limitedStock(p) ? `<span class="cond-inline" style="background:#e67e22;color:#fff">${t9.limited}</span>` : ''}</div>
-          <p class="product-desc">${t.desc}</p>
+          <div><span class="fun-tag">${t.tag}</span>${p.cond ? `<span class="cond-inline">${t9['cond-' + p.cond] || ''}</span>` : ''}${typeOf(p) === 'premium' ? `<span class="cond-inline" style="background:linear-gradient(135deg,#ffe082,#ffb300);color:#3a2a00">${t9.premium}</span>` : typeOf(p) === 'accessory' ? `<span class="cond-inline" style="background:#b3e5fc;color:#01344d">${t9.accessory}</span>` : ''}${p.articulated ? `<span class="cond-inline" style="background:#d1c4e9;color:#2a1650">${t9.articulated}</span>` : ''}${soldOut(p) ? `<span class="cond-inline" style="background:#c0392b;color:#fff">${t9.soldout}</span>` : limitedStock(p) ? `<span class="cond-inline" style="background:#e67e22;color:#fff">${t9.limited}</span>` : ''}</div>
+          <div class="product-desc">${richDesc(t.desc)}</div>
           <div class="product-price">${money(priceOf(p))}</div>
           ${cartBtn(p, false)}
           <div class="actions-row">
