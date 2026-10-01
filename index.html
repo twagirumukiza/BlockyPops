@@ -918,6 +918,7 @@
                    aria-label="${t.name}"
                    onclick="openProduct(${p.id})"
                    onkeydown="if(event.key==='Enter'&&event.target===this)openProduct(${p.id})">
+            <div class="product-header"><div class="product-name">${t.name}</div></div>
             <div class="card-photo" style="${angleStyle(p, 'front')}">
               <div class="badges">${badgesHtml(p, t9)}</div>
               ${soldOut(p) ? `<span class="sold-tag">${t9.soldout}</span>` : limitedStock(p) ? `<span class="sold-tag low">${t9.limited}</span>` : ''}
