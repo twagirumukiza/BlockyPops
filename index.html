@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:title" content="BlockyPops – Minecraft Mini Figures">
+  <meta property="og:title" content="MinescraftPops – Minecraft Mini Figures">
   <meta property="og:description" content="Fun Minecraft mini figures – choisis tes favoris !">
   <meta property="og:type" content="website">
-  <title>BlockyPops – Fun Minecraft Mini Figures | 9.99€</title>
+  <title>MinescraftPops – Fun Minecraft Mini Figures | 9.99€</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -582,7 +582,7 @@
       <a href="#/" class="logo">
         <div class="logo-icon">⛏️</div>
         <div>
-          <div class="logo-text">BlockyPops</div>
+          <div class="logo-text">MinescraftPops</div>
           <div class="logo-sub" data-i18n="tagline">Minecraft Mini Figures</div>
         </div>
       </a>
@@ -601,7 +601,7 @@
     <div id="view-shop">
     <section class="hero">
       <h1 data-i18n="hero-title">Dig into the cutest<br>Minecraft minis!</h1>
-      <p data-i18n="hero-sub">Unique hand-picked BlockyPops — shown from every angle. Perfect for collectors, desks, pencil cases, pencils, pens and backpacks. Limited stock, pure pixel fun!</p>
+      <p data-i18n="hero-sub">Unique hand-picked MinescraftPops — shown from every angle. Perfect for collectors, desks, pencil cases, pencils, pens and backpacks. Limited stock, pure pixel fun!</p>
       <div class="price-badge" data-i18n="price-all">Fun pop pieces</div>
     </section>
 
@@ -620,7 +620,7 @@
   </main>
 
   <footer>
-    <div class="footer-logo">BlockyPops</div>
+    <div class="footer-logo">MinescraftPops</div>
     <p data-i18n="footer">Made with ❤️ + diamonds • Not affiliated with Mojang / Microsoft • Just pure fan fun</p>
   </footer>
 
@@ -871,7 +871,7 @@
       en: {
         tagline: "Minecraft Mini Figures",
         "hero-title": "Dig into the cutest<br>Minecraft minis!",
-        "hero-sub": "Unique hand-picked BlockyPops — shown from every angle. Perfect for collectors, desks, pencil cases, pencils, pens and backpacks. Limited stock, pure pixel fun!",
+        "hero-sub": "Unique hand-picked MinescraftPops — shown from every angle. Perfect for collectors, desks, pencil cases, pencils, pens and backpacks. Limited stock, pure pixel fun!",
         "price-all": "Fun pop pieces",
         "angles-badge": "4 ANGLES",
         "angles-title": "The full collection from every side",
@@ -888,7 +888,7 @@
         back: "← Shop",
         "cart-title": "Your cart",
         "cart-badge": "CART",
-        "cart-empty": "Your cart is empty. Go grab some BlockyPops!",
+        "cart-empty": "Your cart is empty. Go grab some MinescraftPops!",
         total: "Total",
         pay: "Pay (demo)",
         remove: "Remove",
@@ -905,7 +905,7 @@
       fr: {
         tagline: "Mini Figurines Minecraft",
         "hero-title": "Creuse dans les minis<br>Minecraft les plus mignons !",
-        "hero-sub": "BlockyPops uniques soigneusement sélectionnés — présentés sous tous les angles. Parfaits pour les collectionneurs, bureaux, trousses, crayons, stylos et sacs à dos. Stock limité, pure fun pixel !",
+        "hero-sub": "MinescraftPops uniques soigneusement sélectionnés — présentés sous tous les angles. Parfaits pour les collectionneurs, bureaux, trousses, crayons, stylos et sacs à dos. Stock limité, pure fun pixel !",
         "price-all": "Pièces fun pop",
         "angles-badge": "4 ANGLES",
         "angles-title": "La collection complète de tous les côtés",
@@ -922,7 +922,7 @@
         back: "← Boutique",
         "cart-title": "Ton panier",
         "cart-badge": "PANIER",
-        "cart-empty": "Ton panier est vide. Va choisir des BlockyPops !",
+        "cart-empty": "Ton panier est vide. Va choisir des MinescraftPops !",
         total: "Total",
         pay: "Payer (démo)",
         remove: "Retirer",
@@ -941,7 +941,7 @@
     // ===== Config =====
     const PRICE = 9.99; // prix par défaut ; un produit peut avoir son propre champ price
     const priceOf = p => (p && p.price != null && p.price !== '' && !isNaN(p.price)) ? Number(p.price) : PRICE;
-    const CART_KEY = 'blockypops-cart';
+    const CART_KEY = 'minescraftpops-cart';
     const typeOf = p => p.type || (p.premium ? 'premium' : '');
     function badgesHtml(p, t9) {
       const ty = typeOf(p);
@@ -1225,7 +1225,7 @@
     // Compteur partagé entre visiteurs : colle l'URL de ta base Firebase Realtime Database ci-dessous
     // (ex. 'https://mon-projet-default-rtdb.europe-west1.firebasedatabase.app'). Vide = compteur local au navigateur.
     const FIREBASE_URL = '';
-    const LIKES_KEY = 'blockypops-likes';
+    const LIKES_KEY = 'minescraftpops-likes';
     let myLikes = {};
     try { myLikes = JSON.parse(localStorage.getItem(LIKES_KEY) || '{}') || {}; } catch (e) {}
     let likeCounts = {};
@@ -1257,12 +1257,12 @@
       let ok = false; try { ok = document.execCommand('copy'); } catch (e) {} a.remove(); return ok;
     }
     async function shareItem(id) {
-      const p = byId(id), title = p[currentLang].name + ' – BlockyPops';
+      const p = byId(id), title = p[currentLang].name + ' – MinescraftPops';
       if (navigator.share) { try { await navigator.share({ title, text: title, url: shareUrl(id) }); } catch (e) {} return; }
       openShare(id);
     }
     function openShare(id) {
-      const p = byId(id), t9 = i18n[currentLang], title = p[currentLang].name + ' – BlockyPops';
+      const p = byId(id), t9 = i18n[currentLang], title = p[currentLang].name + ' – MinescraftPops';
       const u = encodeURIComponent(shareUrl(id)), tx = encodeURIComponent(title);
       const media = p.slug ? encodeURIComponent(new URL(`images/${p.slug}-front.jpg`, location.href).href) : '';
       const links = [
